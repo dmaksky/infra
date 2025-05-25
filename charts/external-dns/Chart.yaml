@@ -1,0 +1,10 @@
+apiVersion: v2
+name: external-dns-wrapper
+description: Wrapper chart that installs ExternalDNS from the Yandex Cloud OCI registry.
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: externaldns
+    version: ">=0.0.0"
+    repository: oci://cr.yandex/yc-marketplace/yandex-cloud/externaldns/chart

@@ -1,0 +1,11 @@
+nodeSelector:
+  role: obs
+config:
+  folder_id: "b1g4qq9mvvnmv5hhhu82"
+  auth:
+    existingSecret: externaldns-auth
+    existingSecretKey: sa.json
+policy: sync
+sources:
+  - ingress
+  - service
