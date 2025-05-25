@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: argo-apps
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/dmaksky/infra.git 
+      revision: HEAD
+      directories:
+      - path: charts/*
+
+  template:
+    metadata:
+      name: "{{path.basename}}"
+    spec:
+      project: diploma
+      source:
+        repoURL: https://github.com/dmaksky/infra.git
+        targetRevision: HEAD
+        path: "{{path}}"
+        helm:
+          releaseName: "{{path.basename}}"
+          valuesFiles:
+            - values.yml
+          dependencyUpdate: true
+          # parameters:
+          #   - name: image.tag
+          #     value: v1.2.3
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{path.basename}}"
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
