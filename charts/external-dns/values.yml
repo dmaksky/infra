@@ -3,8 +3,9 @@ nodeSelector:
 config:
   folder_id: "b1g4qq9mvvnmv5hhhu82"
   auth:
-    existingSecret: yc-auth
-    existingSecretKey: sa.json
+    json:
+      existingSecret: yc-auth
+      existingSecretKey: sa.json
 policy: sync
 sources:
   - ingress
