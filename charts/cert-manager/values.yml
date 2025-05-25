@@ -1,0 +1,10 @@
+installCRDs: true
+replicaCount: 2
+nodeSelector:
+  role: obs
+startupapicheck:
+  enabled: true
+extraArgs:
+  - --v=2
+prometheus:
+  enabled: false

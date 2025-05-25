@@ -1,0 +1,10 @@
+apiVersion: v2
+name: cert-manager-wrapper
+description: Wrapper chart that installs JetStack cert-manager, pre-configured for Yandex Cloud DNS-01.
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: cert-manager
+    version: 1.15.*
+    repository: https://charts.jetstack.io
