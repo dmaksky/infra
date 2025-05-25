@@ -15,16 +15,15 @@ spec:
     metadata:
       name: "{{path.basename}}"
     spec:
-      project: diploma
+      project: default
       source:
         repoURL: https://github.com/dmaksky/infra.git
         targetRevision: HEAD
         path: "{{path}}"
         helm:
           releaseName: "{{path.basename}}"
-          valuesFiles:
+          valueFiles:
             - values.yml
-          dependencyUpdate: true
           # parameters:
           #   - name: image.tag
           #     value: v1.2.3
