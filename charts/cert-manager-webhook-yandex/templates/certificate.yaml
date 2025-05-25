@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: sbsh-online
+  namespace: default
+  annotations:
+     helm.sh/hook: post-install,post-upgrade
+     helm.sh/hook-delete-policy: before-hook-creation
+     argocd.argoproj.io/sync-wave: "2"
+spec:
+  secretName: sbsh-online
+  issuerRef:
+    name: clusterissuer
+    kind: ClusterIssuer
+  dnsNames:
+    - "*.sbsh.online"

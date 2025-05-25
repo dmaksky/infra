@@ -1,0 +1,10 @@
+apiVersion: v2
+name: cert-manager-webhook-yandex-wrapper
+description: Wrapper chart that installs cert-manager-webhook-yandex from the Yandex Cloud OCI registry.
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: cert-manager-webhook-yandex
+    version: 0.7.*
+    repository: https://github.com/yandex-cloud/cert-manager-webhook-yandex.git
