@@ -1,0 +1,17 @@
+replicaCount: 1
+resources:
+  requests:
+    cpu: "1"
+    memory: "2Gi"
+  limits:
+    cpu: "2"
+    memory: "4Gi"
+nodeSelector:
+  node-group: "obs"
+persistence:
+  enabled: false
+loki:
+  config:
+    table_manager:
+      retention_deletes_enabled: true
+      retention_period: 168h
