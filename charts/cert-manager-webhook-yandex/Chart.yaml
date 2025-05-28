@@ -7,4 +7,4 @@ version: 0.1.0
 dependencies:
   - name: cert-manager-webhook-yandex
     version: 0.7.*
-    repository: oci://cr.yandex/yc-marketplace/yandex-cloud/cert-manager-webhook-yandex/chart
+    repository: 'oci://cr.yandex/yc-marketplace/yandex-cloud/cert-manager-webhook-yandex/chart'
