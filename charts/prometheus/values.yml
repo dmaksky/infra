@@ -1,0 +1,34 @@
+alertmanager:
+  enabled: false
+pushgateway:
+  enabled: false
+server:
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: "1"
+      memory: "2Gi"
+    limits:
+      cpu: "2"
+      memory: "4Gi"
+  nodeSelector:
+    node-group: "obs"
+  extraScrapeConfigs: |
+    - job_name: "postgres-cluster"
+      kubernetes_sd_configs:
+      - role: pod
+        namespaces:
+          names: ["{{ .Values.cnpgNamespace | default "cloudnativepg" }}"]
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_pod_label_postgresql_cnpg_io_cluster]
+        action: keep
+        regex: {{ .Values.cnpgClusterName | default "pg-cluster" }}
+      - source_labels: [__meta_kubernetes_pod_ip]
+        action: replace
+        target_label: __address__
+        regex: (.*)
+        replacement: $1:9187
+    - job_name: "loki"
+      static_configs:
+      - targets: ["loki.loki.svc.cluster.local:3100"]
+
