@@ -1,0 +1,10 @@
+apiVersion: v2
+name: grafana
+description: "Helm-чарт для развёртывания Grafana (с преднастроенными источниками данных)"
+type: application
+version: "0.1.0"
+appVersion: "9.5.2"
+dependencies:
+  - name: grafana
+    repository: "https://grafana.github.io/helm-charts"
+    version: "6.56.6"
