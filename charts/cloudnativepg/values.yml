@@ -1,0 +1,31 @@
+cluster:
+  name: "pg-cluster"
+  instances: 3
+  imageName: "ghcr.io/cloudnative-pg/postgresql:16.2"
+  storageSize: "20Gi"
+  resources:
+    requests:
+      cpu: "1"
+      memory: "4Gi"
+    limits:
+      cpu: "2"
+      memory: "6Gi"
+  affinity:
+    nodeSelector:
+      node-group: "pg"
+    # tolerations:
+    # - key: "node-group"
+    #   value: "pg"
+    #   effect: "NoSchedule"
+    
+backup:
+  retention: "30d"
+  schedule: "0 0 0 * * *"
+  immediate: true
+  s3:
+    bucket: "diploma-dev-pg-backup-s3"
+    endpoint: "storage.yandexcloud.net"
+    region: "ru-central1"
+    credentialsSecretName: "pg-backup-s3-creds"
+    accessKeyIDKey: "ACCESS_KEY_ID"
+    secretKeyKey: "SECRET_ACCESS_KEY"

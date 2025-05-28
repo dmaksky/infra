@@ -1,0 +1,7 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Backup
+metadata:
+  name: {{ .Values.cluster.name | default .Release.Name }}-manual
+spec:
+  cluster:
+    name: {{ .Values.cluster.name | default .Release.Name }}

@@ -1,0 +1,12 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: {{ .Values.cluster.name | default .Release.Name }}-schedule
+spec:
+  schedule: "{{ .Values.backup.schedule }}"
+  {{- if .Values.backup.immediate }}
+  immediate: true
+  {{- end }}
+  backupOwnerReference: self
+  cluster:
+    name: {{ .Values.cluster.name | default .Release.Name }}

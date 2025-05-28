@@ -1,0 +1,40 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ .Values.cluster.name | default .Release.Name }}
+spec:
+  instances: {{ .Values.cluster.instances }}
+  imageName: "{{ .Values.cluster.imageName }}"
+  storage:
+    size: "{{ .Values.cluster.storageSize }}"
+  resources:
+    requests:
+      cpu: {{ .Values.cluster.resources.requests.cpu | quote }}
+      memory: {{ .Values.cluster.resources.requests.memory | quote }}
+    limits:
+      cpu: {{ .Values.cluster.resources.limits.cpu | quote }}
+      memory: {{ .Values.cluster.resources.limits.memory | quote }}
+  affinity:
+    nodeSelector:
+{{ toYaml .Values.cluster.affinity.nodeSelector | indent 6 }}
+    {{- if .Values.cluster.affinity.tolerations }}
+    tolerations:
+{{ toYaml .Values.cluster.affinity.tolerations | indent 6 }}
+    {{- end }}
+    enablePodAntiAffinity: true
+    topologyKey: "kubernetes.io/hostname"
+    podAntiAffinityType: "required"
+  backup:
+    retentionPolicy: {{ .Values.backup.retention }}
+    barmanObjectStore:
+      destinationPath: "s3://{{ .Values.backup.s3.bucket }}/cluster/{{ .Values.cluster.name }}"  # путь в бакете для бэкапов
+      {{- if .Values.backup.s3.endpoint }}
+      endpointURL: "{{ .Values.backup.s3.endpoint }}"
+      {{- end }}
+      s3Credentials:
+        accessKeyId:
+          name: {{ .Values.backup.s3.credentialsSecretName | quote }}
+          key: {{ .Values.backup.s3.accessKeyIDKey | quote }}
+        secretAccessKey:
+          name: {{ .Values.backup.s3.credentialsSecretName | quote }}
+          key: {{ .Values.backup.s3.secretKeyKey | quote }}
